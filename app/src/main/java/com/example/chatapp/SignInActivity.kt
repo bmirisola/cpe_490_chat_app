@@ -23,11 +23,7 @@ class SignInActivity : AppCompatActivity() {
         val password = findViewById<TextView>(R.id.log_in_password).text.toString()
 
         if (email.equals("") || password.equals("")) {
-            Toast.makeText(
-                applicationContext,
-                "Make sure name and password aren't blank!",
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(applicationContext, "Make sure name and password aren't blank!", Toast.LENGTH_LONG).show()
 
         } else {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
@@ -43,8 +39,9 @@ class SignInActivity : AppCompatActivity() {
                         ).show()
                     }
                 }.addOnFailureListener {
-                Log.d("MainActivity", "Failed to log in: ${it.message}")
-            }
+                    Log.d("MainActivity", "Failed to log in: ${it.message}")
+                    Toast.makeText(applicationContext, "Failed to log in", Toast.LENGTH_LONG).show()
+                }
         }
     }
 }

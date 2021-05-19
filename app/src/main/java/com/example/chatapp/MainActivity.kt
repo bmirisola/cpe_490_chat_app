@@ -8,6 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
     var haveAccountTextView: TextView? = null
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                         Log.d("MainActivity", "NOOOOOOOOOOOO")
                         return@addOnCompleteListener
                     } else {
+                        saveUserToDatabase()
                         Toast.makeText(
                             applicationContext,
                             "Successfully created user",
@@ -61,7 +64,23 @@ class MainActivity : AppCompatActivity() {
                     }
                 }.addOnFailureListener {
                     Log.d("MainActivity", "Failed to create user: ${it.message}")
+                    Toast.makeText(applicationContext, "Failed to register: ${it.message}", Toast.LENGTH_LONG).show()
+
                 }
+
+
+        }
+    }
+
+    private fun saveUserToDatabase(){
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+
+        val user = User(uid, findViewById<TextView>(R.id.register_username).text.toString())
+        ref.setValue(user).addOnSuccessListener {
+            Log.d("MainActivity", "Saved user to firebase database")
         }
     }
 }
+
+class User(val uid: String, val username: String)
