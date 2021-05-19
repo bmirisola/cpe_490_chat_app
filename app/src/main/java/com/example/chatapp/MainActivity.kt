@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     var registerButton: Button? = null
     var emailTextview: TextView? = null
     var passwordTextview: TextView? = null
-    var usernameTextview:TextView? = null
+    var usernameTextview: TextView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,25 +35,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun register(){
+    private fun register() {
         val email = findViewById<TextView>(R.id.register_email).text.toString()
         val password = findViewById<TextView>(R.id.register_password).text.toString()
 
         if (email.equals("") || password.equals("")) {
-            Toast.makeText(applicationContext,"Make sure name and password aren't blank!", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                applicationContext,
+                "Make sure name and password aren't blank!",
+                Toast.LENGTH_LONG
+            ).show()
 
-        }
-
-        else{
+        } else {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (!it.isSuccessful) {
                         Log.d("MainActivity", "NOOOOOOOOOOOO")
                         return@addOnCompleteListener
                     } else {
-                        Toast.makeText(applicationContext, "Successfully created user", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            applicationContext,
+                            "Successfully created user",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
-                }.addOnFailureListener{
+                }.addOnFailureListener {
                     Log.d("MainActivity", "Failed to create user: ${it.message}")
                 }
         }
