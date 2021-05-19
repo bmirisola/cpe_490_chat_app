@@ -2,6 +2,7 @@ package com.example.chatapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -15,7 +16,6 @@ class SignInActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.log_in_button).setOnClickListener{
            logIn()
-
         }
     }
 
@@ -28,9 +28,16 @@ class SignInActivity : AppCompatActivity() {
 
         }
         else{
-            FirebaseAuth.getInstance().signInWithEmailAndPassword().addOnCompleteListener(){
-
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(){
+                if (!it.isSuccessful) {
+                    Log.d("MainActivity", "Not successful")
+                    return@addOnCompleteListener
+                } else {
+                    Toast.makeText(applicationContext, "Successfully logged in", Toast.LENGTH_LONG).show()
+                }
+            }.addOnFailureListener{
+                Log.d("MainActivity", "Failed to log in: ${it.message}")
+            }
             }
         }
     }
-}
