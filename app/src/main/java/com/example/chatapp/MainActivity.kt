@@ -79,8 +79,15 @@ class MainActivity : AppCompatActivity() {
         val user = User(uid, findViewById<TextView>(R.id.register_username).text.toString())
         ref.setValue(user).addOnSuccessListener {
             Log.d("MainActivity", "Saved user to firebase database")
+
+            val intent = Intent(this, LatestMessageActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
     }
 }
 
-class User(val uid: String, val username: String)
+class User(val uid: String, val username: String){
+
+    constructor() : this("", "")
+}

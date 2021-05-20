@@ -1,5 +1,6 @@
 package com.example.chatapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -37,6 +38,9 @@ class SignInActivity : AppCompatActivity() {
                             "Successfully logged in",
                             Toast.LENGTH_LONG
                         ).show()
+                        val intent = Intent(this, LatestMessageActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
                     }
                 }.addOnFailureListener {
                     Log.d("MainActivity", "Failed to log in: ${it.message}")
