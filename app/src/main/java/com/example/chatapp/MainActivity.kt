@@ -9,7 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 class MainActivity : AppCompatActivity() {
     var haveAccountTextView: TextView? = null
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class User(val uid: String, val username: String){
-
+@Parcelize
+class User(val uid: String, val username: String): Parcelable{
     constructor() : this("", "")
 }
